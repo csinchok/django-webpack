@@ -1,0 +1,14 @@
+*.py[co]
+__pycache__
+
+/lib
+/lib64
+/bin
+/pip-selfcheck.json
+/pyvenv.cfg
+/*.egg-info
+
+.vscode/tags.json
+
+*.sqlite3
+*.sqlite3-journal
