@@ -6,4 +6,5 @@ from webpack.run import webpack_dev_server
 class Command(BaseCommand):
 
     def handle(self, *args, **options):
-        webpack_dev_server()
+        p = webpack_dev_server()
+        p.wait()

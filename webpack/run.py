@@ -2,6 +2,7 @@ import os
 import subprocess
 import signal
 import tempfile
+from django.conf import settings
 
 from webpack.conf import get_munged_config
 
@@ -13,7 +14,7 @@ def webpack_dev_server(config_path=None):
         config = f.read()
 
     munged = get_munged_config(config)
-    name = 'webpack.config.munged.js'
+    handle, name = tempfile.mkstemp(prefix='webpack-config')
     with open(name, 'w') as f:
         f.write(munged)
 
@@ -24,9 +25,10 @@ def webpack_dev_server(config_path=None):
 
     args = [dev_server_path, '--config', name, '--hot']
 
-    signal.signal(signal.SIGINT, signal.SIG_IGN)
-
-    p = subprocess.Popen(args)
-    p.wait()
-
-    os.remove(name)
+    return subprocess.Popen(
+        args,
+        cwd=settings.BASE_DIR,
+        env={
+            'NODE_PATH': os.path.join(settings.BASE_DIR, 'node_modules')
+        }
+    )

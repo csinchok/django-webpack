@@ -1,12 +1,36 @@
+import os
+
 from django.conf import settings
 
-from django.test import TestCase
 from slimit.parser import Parser
 from slimit import ast
 
 from slimit.visitors.nodevisitor import ASTVisitor
 
 from django.contrib.staticfiles.finders import find
+
+
+class WebpackConfig:
+
+    def __init__(self, settings):
+        self.settings = {
+            'CONFIG_PATH': 'webpack.conf.js',
+            'LOGGING': False,
+            'HOT': True
+        }
+        self.settings.update(settings)
+
+    @property
+    def CONFIG_PATH(self):
+        return self.settings['CONFIG_PATH']
+
+    @property
+    def LOGGING(self):
+        return self.settings['LOGGING']
+
+    @property
+    def HOT(self):
+        return self.settings['HOT']
 
 
 class ConfigMunger(ASTVisitor):
@@ -50,6 +74,23 @@ class ConfigMunger(ASTVisitor):
             if isinstance(child, ast.Assign) and child.op == ':' and child.left.value == 'output':
                 self.munge_output(child.right)
 
+            if isinstance(child, ast.Assign) and child.op == ':' and child.left.value == 'resolve':
+                self.munge_resolve(child.right)
+
+    def munge_resolve(self, node):
+        modules_path = "'{}'".format(os.path.join(settings.BASE_DIR, 'node_modules/'))
+        for child in node:
+            if isinstance(child.right, ast.String) and child.op == ':' and child.left.value == 'modules':
+                child.right.items.insert(0, ast.String(modules_path))
+                break
+        else:
+            modules_node = ast.Assign(
+                op=':',
+                left=ast.Identifier('modules'),
+                right=ast.Array([ast.String(modules_path)])
+            )
+            node.properties.append(modules_node)
+
     def munge_entry(self, node):
 
         if isinstance(node, ast.Object):
@@ -65,7 +106,7 @@ class ConfigMunger(ASTVisitor):
                 node.value = "'{}'".format(match)
 
     def munge_output(self, node):
-        
+
         if not isinstance(node, ast.Object):
             return
 
