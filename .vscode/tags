@@ -4,4 +4,96 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
+ALLOWED_HOSTS	../example_project/example/settings.py	/^ALLOWED_HOSTS = []$/;"	kind:variable	line:28
+ASTVisitor	../webpack/conf.py	/^from slimit.visitors.nodevisitor import ASTVisitor$/;"	kind:namespace	line:7
+AUTH_PASSWORD_VALIDATORS	../example_project/example/settings.py	/^AUTH_PASSWORD_VALIDATORS = [$/;"	kind:variable	line:90
+AppConfig	../webpack/__init__.py	/^from django.apps import AppConfig$/;"	kind:namespace	line:2
+BASE_DIR	../example_project/example/settings.py	/^BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))$/;"	kind:variable	line:16
+BaseCommand	../webpack/management/commands/webpack_dev_server.py	/^from django.core.management.base import BaseCommand$/;"	kind:namespace	line:1
+Command	../webpack/management/commands/webpack_dev_server.py	/^class Command(BaseCommand):$/;"	kind:class	line:6
+ConfigMunger	../example_project/example/tests.py	/^from webpack.conf import ConfigMunger, get_munged_config$/;"	kind:namespace	line:8
+ConfigMunger	../webpack/conf.py	/^class ConfigMunger(ASTVisitor):$/;"	kind:class	line:12
+DATABASES	../example_project/example/settings.py	/^DATABASES = {$/;"	kind:variable	line:79
+DEBUG	../example_project/example/settings.py	/^DEBUG = True$/;"	kind:variable	line:26
+INSTALLED_APPS	../example_project/example/settings.py	/^INSTALLED_APPS = [$/;"	kind:variable	line:33
+LANGUAGE_CODE	../example_project/example/settings.py	/^LANGUAGE_CODE = 'en-us'$/;"	kind:variable	line:109
+MIDDLEWARE	../example_project/example/settings.py	/^MIDDLEWARE = [$/;"	kind:variable	line:45
+Parser	../example_project/example/tests.py	/^from slimit.parser import Parser$/;"	kind:namespace	line:5
+Parser	../webpack/conf.py	/^from slimit.parser import Parser$/;"	kind:namespace	line:4
+ROOT_URLCONF	../example_project/example/settings.py	/^ROOT_URLCONF = 'example.urls'$/;"	kind:variable	line:55
+STATICFILES_DIRS	../example_project/example/settings.py	/^STATICFILES_DIRS = [os.path.join(BASE_DIR, 'example', 'static')]/;"	kind:variable	line:125
+STATIC_ROOT	../example_project/example/settings.py	/^STATIC_ROOT = os.path.join(BASE_DIR, 'static')$/;"	kind:variable	line:124
+STATIC_URL	../example_project/example/settings.py	/^STATIC_URL = '\/static\/'$/;"	kind:variable	line:123
+TEMPLATES	../example_project/example/settings.py	/^TEMPLATES = [$/;"	kind:variable	line:57
+TIME_ZONE	../example_project/example/settings.py	/^TIME_ZONE = 'UTC'$/;"	kind:variable	line:111
+TestCase	../example_project/example/tests.py	/^from django.test import TestCase$/;"	kind:namespace	line:4
+TestCase	../webpack/conf.py	/^from django.test import TestCase$/;"	kind:namespace	line:3
+USE_I18N	../example_project/example/settings.py	/^USE_I18N = True$/;"	kind:variable	line:113
+USE_L10N	../example_project/example/settings.py	/^USE_L10N = True$/;"	kind:variable	line:115
+USE_TZ	../example_project/example/settings.py	/^USE_TZ = True$/;"	kind:variable	line:117
+WSGI_APPLICATION	../example_project/example/settings.py	/^WSGI_APPLICATION = 'example.wsgi.application'$/;"	kind:variable	line:73
+WebpackConfig	../webpack/__init__.py	/^class WebpackConfig(AppConfig):$/;"	kind:class	line:5
+WebpackTestCase	../example_project/example/tests.py	/^class WebpackTestCase(TestCase):$/;"	kind:class	line:36
+__init__.py	../example_project/example/__init__.py	1;"	kind:file	line:1
+__init__.py	../example_project/example/app/__init__.py	1;"	kind:file	line:1
+__init__.py	../webpack/__init__.py	1;"	kind:file	line:1
+__init__.py	../webpack/management/__init__.py	1;"	kind:file	line:1
+__init__.py	../webpack/management/commands/__init__.py	1;"	kind:file	line:1
+admin	../example_project/example/urls.py	/^from django.contrib import admin$/;"	kind:namespace	line:17
+application	../example_project/example/wsgi.py	/^application = get_wsgi_application()$/;"	kind:variable	line:16
+ast	../webpack/conf.py	/^from slimit import ast$/;"	kind:namespace	line:5
+author	../setup.py	/^    author='Chris Sinchok',$/;"	kind:variable	line:5
+author_email	../setup.py	/^    author_email='chris@sinchok.com',$/;"	kind:variable	line:6
+conf.py	../webpack/conf.py	1;"	kind:file	line:1
+django	../example_project/manage.py	/^            import django$/;"	kind:namespace	line:14
+django-admin.py	../bin/django-admin.py	1;"	kind:file	line:1
+execute_from_command_line	../example_project/manage.py	/^        from django.core.management import execute_from_command_line$/;"	kind:namespace	line:8
+find	../webpack/conf.py	/^from django.contrib.staticfiles.finders import find$/;"	kind:namespace	line:9
+get_munged_config	../example_project/example/tests.py	/^from webpack.conf import ConfigMunger, get_munged_config$/;"	kind:namespace	line:8
+get_munged_config	../webpack/conf.py	/^def get_munged_config(config):$/;"	kind:function	line:101
+get_munged_config	../webpack/run.py	/^from webpack.conf import get_munged_config$/;"	kind:namespace	line:6
+get_wsgi_application	../example_project/example/wsgi.py	/^from django.core.wsgi import get_wsgi_application$/;"	kind:namespace	line:12
+handle	../webpack/management/commands/webpack_dev_server.py	/^    def handle(self, *args, **options):$/;"	kind:member	line:8
+is_module_export	../webpack/conf.py	/^    def is_module_export(self, node):$/;"	kind:member	line:22
+manage.py	../example_project/manage.py	1;"	kind:file	line:1
+management	../bin/django-admin.py	/^from django.core import management$/;"	kind:namespace	line:2
+mock	../example_project/example/tests.py	/^from unittest import mock$/;"	kind:namespace	line:1
+mock_find	../example_project/example/tests.py	/^        def mock_find(path):$/;"	kind:function	line:40
+models.py	../webpack/models.py	1;"	kind:file	line:1
+munge_entry	../webpack/conf.py	/^    def munge_entry(self, node):$/;"	kind:member	line:53
+munge_exports	../webpack/conf.py	/^    def munge_exports(self, node):$/;"	kind:member	line:43
+munge_output	../webpack/conf.py	/^    def munge_output(self, node):$/;"	kind:member	line:67
+name	../setup.py	/^    name='django-webpack',$/;"	kind:variable	line:7
+name	../webpack/__init__.py	/^    name = 'webpack'$/;"	kind:variable	line:6
+os	../example_project/example/settings.py	/^import os$/;"	kind:namespace	line:13
+os	../example_project/example/tests.py	/^import os$/;"	kind:namespace	line:6
+os	../example_project/example/wsgi.py	/^import os$/;"	kind:namespace	line:10
+os	../example_project/manage.py	/^import os$/;"	kind:namespace	line:2
+os	../webpack/run.py	/^import os$/;"	kind:namespace	line:1
+packages	../setup.py	/^    packages=['webpack'],$/;"	kind:variable	line:10
+ready	../webpack/__init__.py	/^    def ready(self):$/;"	kind:member	line:9
+run.py	../webpack/run.py	1;"	kind:file	line:1
+settings	../example_project/example/tests.py	/^from django.conf import settings$/;"	kind:namespace	line:3
+settings	../webpack/conf.py	/^from django.conf import settings$/;"	kind:namespace	line:1
+settings.py	../example_project/example/settings.py	1;"	kind:file	line:1
+setup	../setup.py	/^from setuptools import setup$/;"	kind:namespace	line:2
 setup.py	../setup.py	1;"	kind:file	line:1
+signal	../webpack/run.py	/^import signal$/;"	kind:namespace	line:3
+subprocess	../webpack/run.py	/^import subprocess$/;"	kind:namespace	line:2
+sys	../example_project/manage.py	/^import sys$/;"	kind:namespace	line:3
+sys	../webpack/__init__.py	/^import sys$/;"	kind:namespace	line:1
+tempfile	../webpack/run.py	/^import tempfile$/;"	kind:namespace	line:4
+test_munge_config	../example_project/example/tests.py	/^    def test_munge_config(self):$/;"	kind:member	line:38
+tests.py	../example_project/example/tests.py	1;"	kind:file	line:1
+url	../example_project/example/urls.py	/^from django.conf.urls import url$/;"	kind:namespace	line:16
+url	../setup.py	/^    url='https:\/\/github.com\/csinchok\/django-webpack',$/;"	kind:variable	line:9
+urlpatterns	../example_project/example/urls.py	/^urlpatterns = [$/;"	kind:variable	line:19
+urls.py	../example_project/example/urls.py	1;"	kind:file	line:1
+verbose_name	../webpack/__init__.py	/^    verbose_name = "Webpack"$/;"	kind:variable	line:7
+version	../setup.py	/^    version='0.0.1',$/;"	kind:variable	line:8
+views.py	../example_project/example/app/views.py	1;"	kind:file	line:1
+visit	../webpack/conf.py	/^    def visit(self, tree):$/;"	kind:member	line:14
+webpack_dev_server	../webpack/management/commands/webpack_dev_server.py	/^from webpack.run import webpack_dev_server$/;"	kind:namespace	line:3
+webpack_dev_server	../webpack/run.py	/^def webpack_dev_server(config_path=None):$/;"	kind:function	line:9
+webpack_dev_server.py	../webpack/management/commands/webpack_dev_server.py	1;"	kind:file	line:1
+wsgi.py	../example_project/example/wsgi.py	1;"	kind:file	line:1
