@@ -7,7 +7,7 @@ module.exports = {
       'vue': 'js/vue-entry.js'
   },
   output: {
-    filename: '[name].js'
+    filename: '[name].[hash].js'
   },
   module: {
     rules: [

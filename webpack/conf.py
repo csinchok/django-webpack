@@ -1,4 +1,6 @@
+import json
 import os
+from urllib.parse import urljoin
 
 from django.conf import settings as django_settings
 
@@ -116,7 +118,10 @@ class ConfigMunger(ASTVisitor):
             output['path'] = django_settings.STATIC_ROOT
 
         if getattr(django_settings, 'STATIC_URL', None):
-            output['publicPath'] = django_settings.STATIC_URL
+            output['publicPath'] = urljoin(
+                settings['DEV_SERVER_HOST'],
+                django_settings.STATIC_URL
+            )
 
         # Add the ManifestPlugin
         if 'plugins' not in exports:
@@ -129,6 +134,19 @@ class ConfigMunger(ASTVisitor):
         plugin_var = program.children()[0].expr
         exports['plugins'].node.items.append(plugin_var)
 
+        # Set the DevServer settings...
+        if 'devServer' not in exports:
+            exports['devServer'] = {}
+
+        if settings['HOT']:
+            exports['devServer']['hot'] = True
+            exports['devServer']['hot'].node.value = 'true'
+
+        if 'headers' not in exports['devServer']:
+            exports['devServer']['headers'] = {}
+
+        exports['devServer']['headers']['Access-Control-Allow-Origin'] = '*'
+
 
 def get_munged_config(config):
     parser = Parser()
@@ -138,3 +156,14 @@ def get_munged_config(config):
     visitor.visit(program)
 
     return program.to_ecma()
+
+
+def get_manifest_mapping(name):
+    manifest_path = os.path.join(
+        django_settings.STATIC_ROOT,
+        settings['MANIFEST_FILENAME']
+    )
+    with open(manifest_path, 'r') as f:
+        manifest = json.load(f)
+
+    return manifest.get(name + '.js')
