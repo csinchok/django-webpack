@@ -1,0 +1,2 @@
+include webpack/webpack-manifest-plugin/*
+include webpack/webpack-manifest-plugin/lib/*
