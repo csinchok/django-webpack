@@ -1,6 +1,6 @@
 import os
 
-from django.conf import settings
+from django.conf import settings as django_settings
 
 from slimit.parser import Parser
 from slimit import ast
@@ -9,6 +9,8 @@ from slimit.visitors.nodevisitor import ASTVisitor
 
 from django.contrib.staticfiles.finders import find
 
+from .javascript import JSObject
+
 
 class WebpackConfig:
 
@@ -16,9 +18,13 @@ class WebpackConfig:
         self.settings = {
             'CONFIG_PATH': 'webpack.conf.js',
             'LOGGING': False,
-            'HOT': True
+            'HOT': True,
+            'DEV_SERVER_HOST': 'http://127.0.0.1:8080/'
         }
         self.settings.update(settings)
+
+    def __getitem__(self, key):
+        return self.settings[key]
 
     @property
     def CONFIG_PATH(self):
@@ -33,11 +39,32 @@ class WebpackConfig:
         return self.settings['HOT']
 
 
+settings = WebpackConfig(getattr(django_settings, 'WEBPACK', {}))
+
+
+MANIFEST_PLUGIN_CODE = '''
+new ManifestPlugin({{
+    writeToFileEmit: true,
+    fileName: '{manifest_filename}'
+}})
+'''
+
+
 class ConfigMunger(ASTVisitor):
 
     def visit(self, tree):
         if not isinstance(tree, ast.Program):
             return
+
+        parser = Parser()
+        plugin_path = os.path.join(
+            os.path.dirname(__file__), 'webpack-manifest-plugin'
+        )
+        require_code = "var ManifestPlugin = require('{}');".format(
+            plugin_path
+        )
+        program = parser.parse(require_code)
+        tree._children_list.insert(0, program.children()[0])
 
         for node in tree.children():
             if self.is_module_export(node):
@@ -66,77 +93,40 @@ class ConfigMunger(ASTVisitor):
 
     def munge_exports(self, node):
 
-        for child in node:
+        exports = JSObject(node)
 
-            if isinstance(child, ast.Assign) and child.op == ':' and child.left.value == 'entry':
-                self.munge_entry(child.right)
+        # We will need a 
+        # if 'resolve' not in exports:
+        #     exports['resolve'] = {}
+        # exports['resolve']['modules'] = [
+        #     os.path.join(django_settings.BASE_DIR, 'node_modules/')
+        # ]
 
-            if isinstance(child, ast.Assign) and child.op == ':' and child.left.value == 'output':
-                self.munge_output(child.right)
+        # Expand the entry values using staticfiles finders
+        entry = exports['entry']
+        for key in entry.keys():
+            relative_path = str(entry[key])[1:-1]
+            absolute_path = find(relative_path)
+            exports['entry'][key] = absolute_path
 
-            if isinstance(child, ast.Assign) and child.op == ':' and child.left.value == 'resolve':
-                self.munge_resolve(child.right)
+        # Set the output path and publicPath
+        output = exports['output']
+        if getattr(django_settings, 'STATIC_ROOT', None):
+            output['path'] = django_settings.STATIC_ROOT
 
-    def munge_resolve(self, node):
-        modules_path = "'{}'".format(os.path.join(settings.BASE_DIR, 'node_modules/'))
-        for child in node:
-            if isinstance(child.right, ast.String) and child.op == ':' and child.left.value == 'modules':
-                child.right.items.insert(0, ast.String(modules_path))
-                break
-        else:
-            modules_node = ast.Assign(
-                op=':',
-                left=ast.Identifier('modules'),
-                right=ast.Array([ast.String(modules_path)])
-            )
-            node.properties.append(modules_node)
+        if getattr(django_settings, 'STATIC_URL', None):
+            output['publicPath'] = django_settings.STATIC_URL
 
-    def munge_entry(self, node):
+        # Add the ManifestPlugin
+        if 'plugins' not in exports:
+            exports['plugins'] = []
 
-        if isinstance(node, ast.Object):
-            # This is a dict....
-            for child in node:
-                self.munge_entry(child.right)
-
-        elif isinstance(node, ast.String):
-            path = node.value[1:-1]
-            match = find(path)
-
-            if match:
-                node.value = "'{}'".format(match)
-
-    def munge_output(self, node):
-
-        if not isinstance(node, ast.Object):
-            return
-
-        if getattr(settings, 'STATIC_ROOT'):
-            for child in node:
-                if isinstance(child.right, ast.String) and child.op == ':' and child.left.value == 'path':
-                    # Set the path...
-                    child.right.value = "'{}'".format(settings.STATIC_ROOT)
-                    break
-            else:
-                path_node = ast.Assign(
-                    op=':',
-                    left=ast.Identifier('path'),
-                    right=ast.String("'{}'".format(settings.STATIC_ROOT))
-                )
-                node.properties.append(path_node)
-
-        if getattr(settings, 'STATIC_URL'):
-            for child in node:
-                if isinstance(child.right, ast.String) and child.op == ':' and child.left.value == 'publicPath':
-                    # Set the path...
-                    child.right.value = "'{}'".format(settings.STATIC_URL)
-                    break
-            else:
-                public_path_node = ast.Assign(
-                    op=':',
-                    left=ast.Identifier('publicPath'),
-                    right=ast.String("'{}'".format(settings.STATIC_URL))
-                )
-                node.properties.append(public_path_node)
+        parser = Parser()
+        program = parser.parse(
+            MANIFEST_PLUGIN_CODE.format(manifest_filename='manifest.json')
+        )
+        plugin_var = program.children()[0].expr
+        exports['plugins'].node.items.append(plugin_var)
 
 
 def get_munged_config(config):

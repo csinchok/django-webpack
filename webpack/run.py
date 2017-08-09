@@ -1,6 +1,5 @@
 import os
 import subprocess
-import signal
 import tempfile
 from django.conf import settings
 
@@ -28,6 +27,7 @@ def webpack_dev_server(config_path=None):
     return subprocess.Popen(
         args,
         cwd=settings.BASE_DIR,
+        stdout=subprocess.PIPE,
         env={
             'NODE_PATH': os.path.join(settings.BASE_DIR, 'node_modules')
         }

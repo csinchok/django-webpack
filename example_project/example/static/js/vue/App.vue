@@ -23,7 +23,7 @@ export default {
   name: 'app',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App. Well, this works. Hello. Butts.'
+      msg: 'Welcome to Your Vue.js App. Well, this works. Testing.'
     }
   }
 }

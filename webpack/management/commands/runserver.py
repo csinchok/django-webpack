@@ -1,3 +1,4 @@
+import io
 import os
 
 from django.conf import settings
@@ -17,11 +18,16 @@ class Command(RunserverCommand):
 
         p = None
         if b'runserver' not in p_cmdline:
-            self.stdout.write("Starting webpack-dev-server on http://127.0.0.1:8080")
+            self.stdout.write("Starting webpack-dev-server...")
             p = webpack_dev_server()
-        
+            wrapper = io.TextIOWrapper(p.stdout, line_buffering=True)
+            first_line = next(wrapper)
+            webpack_host = first_line.split()[-1]
+
+            print(webpack_host)
+
         super().run(**options)
-        
+
         if p:
             p.kill()
             p.wait()

@@ -1,12 +1,13 @@
 var path = require('path')
 var webpack = require('webpack')
+// var ManifestPlugin = require('webpack-manifest-plugin');
 
 module.exports = {
   entry: {
       'vue': 'js/vue-entry.js'
   },
   output: {
-    filename: '[name]-build.js'
+    filename: '[name].js'
   },
   module: {
     rules: [
@@ -48,23 +49,3 @@ module.exports = {
   devtool: '#eval-source-map'
 }
 
-if (process.env.NODE_ENV === 'production') {
-  module.exports.devtool = '#source-map'
-  // http://vue-loader.vuejs.org/en/workflow/production.html
-  module.exports.plugins = (module.exports.plugins || []).concat([
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: '"production"'
-      }
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      sourceMap: true,
-      compress: {
-        warnings: false
-      }
-    }),
-    new webpack.LoaderOptionsPlugin({
-      minimize: true
-    })
-  ])
-}
