@@ -1,5 +1,7 @@
 # django-webpack
 
+*!!! Warning: EXTREMELY IN DEVELOPMENT!!!*
+
 This package provides a reusable app that integrates webpack into a Django project.
 
 ## Installation:
