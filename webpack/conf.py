@@ -19,7 +19,8 @@ class WebpackConfig:
             'CONFIG_PATH': 'webpack.conf.js',
             'LOGGING': False,
             'HOT': True,
-            'DEV_SERVER_HOST': 'http://127.0.0.1:8080/'
+            'DEV_SERVER_HOST': 'http://127.0.0.1:8080/',
+            'MANIFEST_FILENAME': 'webpack-manifest.json'
         }
         self.settings.update(settings)
 
@@ -45,7 +46,7 @@ settings = WebpackConfig(getattr(django_settings, 'WEBPACK', {}))
 MANIFEST_PLUGIN_CODE = '''
 new ManifestPlugin({{
     writeToFileEmit: true,
-    fileName: '{manifest_filename}'
+    fileName: '{}'
 }})
 '''
 
@@ -123,7 +124,7 @@ class ConfigMunger(ASTVisitor):
 
         parser = Parser()
         program = parser.parse(
-            MANIFEST_PLUGIN_CODE.format(manifest_filename='manifest.json')
+            MANIFEST_PLUGIN_CODE.format(settings['MANIFEST_FILENAME'])
         )
         plugin_var = program.children()[0].expr
         exports['plugins'].node.items.append(plugin_var)
