@@ -1,6 +1,5 @@
 var path = require('path')
 var webpack = require('webpack')
-// var ManifestPlugin = require('webpack-manifest-plugin');
 
 module.exports = {
   entry: {
