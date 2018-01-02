@@ -98,19 +98,13 @@ class ConfigMunger(ASTVisitor):
 
         exports = JSObject(node)
 
-        # We will need a 
-        # if 'resolve' not in exports:
-        #     exports['resolve'] = {}
-        # exports['resolve']['modules'] = [
-        #     os.path.join(django_settings.BASE_DIR, 'node_modules/')
-        # ]
-
         # Expand the entry values using staticfiles finders
         entry = exports['entry']
-        for key in entry.keys():
-            relative_path = str(entry[key])[1:-1]
-            absolute_path = find(relative_path)
-            exports['entry'][key] = absolute_path
+        if isinstance(entry, JSObject):
+            for key in entry.keys():
+                relative_path = str(entry[key])[1:-1]
+                absolute_path = find(relative_path)
+                exports['entry'][key] = absolute_path
 
         # Set the output path and publicPath
         output = exports['output']

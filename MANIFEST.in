@@ -1,2 +1,1 @@
-include webpack/webpack-manifest-plugin/*
-include webpack/webpack-manifest-plugin/lib/*
+recursive-include webpack/webpack-manifest-plugin *.js *.json

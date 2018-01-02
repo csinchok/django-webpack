@@ -5,7 +5,11 @@ setup(
     author='Chris Sinchok',
     author_email='chris@sinchok.com',
     name='django-webpack-plugin',
-    version='0.0.2',
+    version='0.0.5',
     url='https://github.com/csinchok/django-webpack',
-    packages=['webpack', 'webpack.management', 'webpack.management.commands'],
+    packages=[
+        'webpack', 'webpack.management',
+        'webpack.management.commands', 'webpack.templatetags'
+    ],
+    include_package_data=True
 )
