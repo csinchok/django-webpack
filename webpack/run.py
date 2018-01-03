@@ -29,6 +29,7 @@ def webpack_dev_server(config_path=None):
         cwd=settings.BASE_DIR,
         stdout=subprocess.PIPE,
         env={
-            'NODE_PATH': os.path.join(settings.BASE_DIR, 'node_modules')
+            'NODE_PATH': os.path.join(settings.BASE_DIR, 'node_modules'),
+            'PATH': os.environ.get('PATH')
         }
     )
