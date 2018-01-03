@@ -1,4 +1,4 @@
-# django-webpack
+# django-webpack-plugin
 
 *!!! Warning: EXTREMELY IN DEVELOPMENT!!!*
 
@@ -6,7 +6,7 @@ This package provides a reusable app that integrates webpack into a Django proje
 
 ## Installation:
 
-    $ pip install django-webpack
+    $ pip install django-webpack-plugin
 
 ## Configuration:
 
