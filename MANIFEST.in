@@ -1,1 +1,2 @@
 recursive-include webpack/webpack-manifest-plugin *.js *.json
+include webpack/runner.js

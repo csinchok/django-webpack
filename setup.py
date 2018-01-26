@@ -7,6 +7,9 @@ setup(
     name='django-webpack-plugin',
     version='0.1',
     url='https://github.com/csinchok/django-webpack',
+    install_requires=[
+        'django-appconf==1.0.2'
+    ],
     packages=[
         'webpack', 'webpack.management',
         'webpack.management.commands', 'webpack.templatetags'

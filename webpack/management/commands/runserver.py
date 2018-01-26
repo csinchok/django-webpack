@@ -1,30 +1,27 @@
 import io
 import os
+import time
 
 from django.contrib.staticfiles.management.commands.runserver import (
     Command as RunserverCommand,
 )
 
-from webpack.run import webpack_dev_server
+from webpack.runner import run_webpack
 
 
 class Command(RunserverCommand):
 
     def run(self, *args, **options):
-        webpack = None
+        runner = None
 
         # If RUN_MAIN is true, then we're in the autoreloader
         if os.environ.get("RUN_MAIN") != 'true':
 
-            webpack = webpack_dev_server()
-            wrapper = io.TextIOWrapper(webpack.stdout, line_buffering=True)
-            first_line = next(wrapper)
-            webpack_host = first_line.split()[-1]
-            self.stdout.write('Running webpack-dev-server on "{}"'.format(webpack_host))
+            runner = run_webpack(dev_server=True)
 
         super().run(**options)
 
-        if webpack:
+        if runner:
             self.stdout.write('Stopping webpack-dev-server....')
-            webpack.kill()
-            webpack.wait()
+            runner.kill()
+            runner.wait()

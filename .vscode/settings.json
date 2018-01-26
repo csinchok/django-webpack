@@ -18,5 +18,6 @@
     "python.unitTest.unittestEnabled": false,
     "python.unitTest.promptToConfigure": false,
     "python.unitTest.pyTestEnabled": false,
-    "python.unitTest.nosetestsEnabled": false
+    "python.unitTest.nosetestsEnabled": false,
+    "git.ignoreLimitWarning": true
 }

@@ -105,6 +105,7 @@ ManifestPlugin.prototype.apply = function(compiler) {
     };
 
     if (this.opts.writeToFileEmit) {
+      console.log(json)
       var outputFolder = compilation.options.output.path;
       var outputFile = path.join(outputFolder, this.opts.fileName);
 
