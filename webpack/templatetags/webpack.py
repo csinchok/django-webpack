@@ -18,6 +18,8 @@ def iter_mapping(entry_name, extensions=None):
     with open(manifest_path, 'r') as f:
         manifest = json.load(f)
 
+    print(manifest)
+
     for infile, outfile in manifest.items():
         name, _ = infile.split('.', 1)
         _, ext = os.path.splitext(infile)

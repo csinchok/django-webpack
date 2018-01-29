@@ -27,16 +27,16 @@ Add `webpack` to your `INSTALLED_APPS`. *Important:* You'll need `webpack` to co
 
 Next, add `WEBPACK` settings. The default settings are:
 
-    WEBPACK = {
-        'CONFIG_PATH': 'webpack.conf.js',
-        'LOGGING': False,
-        'HOT': True,
-        'DEV_SERVER_HOST': 'http://127.0.0.1:8080/',
-        'MANIFEST_FILENAME': 'webpack-manifest.json'
-    }
+    WEBAPCK_DEV_SERVER = settings.DEBUG
+    WEBAPCK_HOST = 'localhost'
+    WEBAPCK_PORT = 8080
+    WEBAPCK_CONFIG_PATH = 'webpack.conf.js'
+    WEBAPCK_MANIFEST_FILE = 'webpack-manifest.json'
+    WEBAPCK_HOT = True
 
 Finally, in your templates, simply `{% load webpack %}`, and use the `{% webpack %}` templatetag, just as you would the `{% static %}` tag, in order to add an entry to the page.
 
     {% load webpack %}
 
-    {% webpack 'vue' %}
+    {% webpack_js 'vue' %}
+    {% webpack_css 'vue' %}

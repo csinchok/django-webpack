@@ -7,6 +7,7 @@ from django.contrib.staticfiles.management.commands.runserver import (
 )
 
 from webpack.runner import run_webpack
+from webpack.conf import settings
 
 
 class Command(RunserverCommand):
@@ -15,7 +16,7 @@ class Command(RunserverCommand):
         runner = None
 
         # If RUN_MAIN is true, then we're in the autoreloader
-        if os.environ.get("RUN_MAIN") != 'true':
+        if os.environ.get("RUN_MAIN") != 'true' and settings.WEBPACK_DEV_SERVER:
 
             runner = run_webpack(dev_server=True)
 

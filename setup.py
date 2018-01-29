@@ -5,7 +5,7 @@ setup(
     author='Chris Sinchok',
     author_email='chris@sinchok.com',
     name='django-webpack-plugin',
-    version='0.1',
+    version='0.2',
     url='https://github.com/csinchok/django-webpack',
     install_requires=[
         'django-appconf==1.0.2'

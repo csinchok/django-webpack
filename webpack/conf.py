@@ -8,7 +8,7 @@ class WebpackConf(AppConf):
     DEV_SERVER = settings.DEBUG
     HOST = 'localhost'
     PORT = 8080
-    CONFIG_PATH = 'webpack.config.js'
+    CONFIG_PATH = 'webpack.conf.js'
     MANIFEST_FILE = 'webpack-manifest.json'
     HOT = True
 
