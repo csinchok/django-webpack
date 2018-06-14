@@ -15,9 +15,14 @@ def iter_mapping(entry_name, extensions=None):
         settings.STATIC_ROOT,
         settings.WEBPACK_MANIFEST_FILE
     )
-    with open(manifest_path, 'r') as f:
+    try:
+        f = open(manifest_path, 'r')
+    except FileNotFoundError:
+        return
+    else:
         manifest = json.load(f)
-
+        f.close()
+    
     for infile, outfile in manifest.items():
         name, _ = infile.split('.', 1)
         _, ext = os.path.splitext(infile)
